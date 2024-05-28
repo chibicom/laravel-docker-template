@@ -25,7 +25,7 @@ class TodoController extends Controller
         // $todo = new Todo();
         // $todoList = $todo->all();
         // // dd($todoList);
-        
+
         // return view('todo.index', ['todoList' => $todoList]);
 
         $todoList = $this->todo->all();
@@ -37,7 +37,7 @@ class TodoController extends Controller
     {
         // dd('新規作成画面のルート実行！');
         // TODO: 第1引数を指定
-        return view('/todo/create'); // 追記
+        return view('todo.create'); // 追記
     }
 
     public function store(Request $request)
@@ -67,7 +67,7 @@ class TodoController extends Controller
         // return view('todo.show', ['todo' => $targetTodo]);
 
         $todo = $this->todo->find($id);
-    
+
         return view('todo.show', ['todo' => $todo]);
     }
 
@@ -79,5 +79,16 @@ class TodoController extends Controller
 
         return view('todo.edit', ['todo' => $todo]);
         // dd($todo);
+    }
+
+    public function update(Request $request, $id) // 第1引数: リクエスト情報の取得　第2引数: ルートパラメータの取得
+    {
+        $inputs = $request->all();
+        $todo = $this->todo->find($id);
+        $todo->fill($inputs)->save();
+
+        // dd($todo);
+        // dd($inputs);
+        return redirect()->route('todo.show', $todo->id);
     }
 }
