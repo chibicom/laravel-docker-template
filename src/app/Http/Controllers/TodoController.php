@@ -30,7 +30,7 @@ class TodoController extends Controller
 
         $todoList = $this->todo->all();
 
-        return view('todo.index');
+        return view('todo.index', ['todoList' => $todoList]);
     }
 
     public function create()
@@ -66,8 +66,7 @@ class TodoController extends Controller
 
         // return view('todo.show', ['todo' => $targetTodo]);
 
-        $model = new Todo();
-        $todo = $model->find($id);
+        $todo = $this->todo->find($id);
     
         return view('todo.show', ['todo' => $todo]);
     }
